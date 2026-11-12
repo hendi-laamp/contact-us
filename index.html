@@ -3,14 +3,30 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Contact Sales | LAAMP</title>
+<title>Request a demo | LAAMP</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <!--
-  Proposed /contact-us page (mockup for Rahmat).
-  Header and footer copy the live site, with two changes: "Support" in the header, "Get support" in the footer.
-  New parts are marked NEW. Everything else matches the live page and stays as it is in Framer.
+  Proposed /contact-us page, version 2 (mockup for Rahmat). Based on the 9 Nov meeting, Tim's Slack and the competitor research.
+  What changed from the live page:
+  1. Hero: the page now says it is for sales, and the outcome is a demo. New headline, subhead and "What happens next" steps.
+  2. NEW note at the top of the form card for people who are not buying (workers waiting for a login, existing users).
+  3. Button reads "Request a demo". Form fields are unchanged, so the ActiveCampaign mapping stays as it is.
+  4. "Support" added to the header, "Get support" to the footer.
+  5. NEW marketing consent box above the button, and a new line under it. The box uses the same general wording as the
+     website chat (CHAT-v1). It names no frequency and no newsletter, so it stays true whatever LAAMP sends later.
+     It is unticked by default and not required. The line under the button is copied from the live Workforce Readiness page.
+     In ActiveCampaign it must set field 30 "Marketing opt-in" = Yes. Today the Contact Sales form (form 7) adds every
+     submitter to the Master Contact list with no consent box. That action has to change, or the box means nothing:
+     only people who tick it should join Master Contact (same as the Workforce Readiness flow, automation 60).
+  6. REMOVED from this page: the support FAQ item and the "We'd love to hear from you" block (support email, phone, office).
+     The "New to LAAMP / Already using LAAMP" chooser from version 1 is gone (Tim: two separate pages, no extra click).
+  To confirm before publishing:
+  - Tim: calendar on the page, or booking link in the reply after screening. This mockup uses the second (his stated preference).
+  - Tim: demo length and reply time. Add both to the steps once confirmed. No numbers are shown until then.
+  - Tim and Beau: the wording of the note above the form.
+  - Hendi: the consent text version code for this form (for ActiveCampaign field 31), and the form 7 change above.
   Links use production paths (/support, /contact-us), so they only work once published.
 -->
 <style>
@@ -60,20 +76,38 @@
 
   /* Hero and sales form */
   .hero { background: linear-gradient(#E8F0F7 0%, #FFFFFF 100%); padding: 160px 24px 120px; }
-  .hero__stack { max-width: 736px; margin: 0 auto; display: flex; flex-direction: column; gap: 40px; }
-  .hero__head { text-align: center; display: flex; flex-direction: column; gap: 24px; }
-  .hero__title { font-size: 45px; line-height: 1; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); }
+  .hero__grid { max-width: 1032px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: 64px; align-items: start; }
+  .hero__head { display: flex; flex-direction: column; gap: 24px; padding-top: 16px; }
+  .hero__eyebrow { font-size: 15px; line-height: 21px; font-weight: 600; color: var(--blue); }
+  .hero__title { font-size: 45px; line-height: 1.05; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); }
   .hero__sub { font-size: 18px; line-height: 24px; font-weight: 500; color: var(--muted); }
   @media (max-width: 809px) {
     .hero { padding: 128px 24px 80px; }
+    .hero__grid { grid-template-columns: 1fr; gap: 40px; }
+    .hero__head { padding-top: 0; }
     .hero__title { font-size: 36px; line-height: 1.1; }
   }
 
-  /* NEW: sales or support chooser */
-  .choose { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-  .choose__card { display: flex; flex-direction: column; gap: 24px; padding: 24px; background: #FFFFFF; border-radius: 12px;
-    box-shadow: 0 8px 8px -4px rgba(16, 24, 40, 0.04), 0 20px 24px -4px rgba(16, 24, 40, 0.08); }
-  @media (max-width: 639px) { .choose { grid-template-columns: 1fr; gap: 16px; } }
+  /* NEW: what happens next */
+  .steps__title { margin-top: 16px; font-size: 18px; line-height: 24px; font-weight: 600; color: var(--ink); }
+  .steps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 20px; }
+  .steps li { display: grid; grid-template-columns: 32px 1fr; gap: 16px; align-items: start; }
+  .steps__num { width: 32px; height: 32px; border-radius: 1000px; background: var(--blue); color: #FFFFFF;
+    display: flex; align-items: center; justify-content: center; font-size: 15px; line-height: 21px; font-weight: 600; }
+  .steps strong { display: block; font-size: 18px; line-height: 24px; font-weight: 600; color: var(--ink); }
+  .steps p { margin-top: 4px; font-size: 15px; line-height: 21px; color: var(--muted); }
+
+  /* NEW: note for people who are not buying */
+  .sales-note { margin-bottom: 24px; padding: 16px; border-radius: 8px; background: #EEF4FA; font-size: 15px; line-height: 21px;
+    color: var(--ink); }
+  .sales-note strong { font-weight: 600; }
+  .sales-note a { color: var(--blue); font-weight: 600; text-underline-offset: 2px; }
+
+  /* NEW: marketing consent */
+  .consent { display: grid; grid-template-columns: 20px 1fr; gap: 12px; align-items: start; }
+  .consent input { width: 20px; height: 20px; margin: 0; accent-color: var(--brand); cursor: pointer; }
+  .consent label { font-size: 15px; line-height: 21px; font-weight: 400; color: var(--ink); cursor: pointer; }
 
   /* Shared card parts */
   .icon-dot { width: 48px; height: 48px; border-radius: 1000px; background: var(--blue); color: #FFFFFF;
@@ -133,19 +167,9 @@
   .faq__answer p { font-size: 18px; line-height: 24px; color: var(--muted); }
   @media (max-width: 809px) { .faq { padding: 80px 24px; } .faq__title { font-size: 40px; } .faq__list { margin-top: 48px; } }
 
-  /* NEW: support section */
-  .support { padding: 120px 0; scroll-margin-top: 68px; }
-  .support__title { font-size: 54px; line-height: 1.1; font-weight: 600; letter-spacing: -0.02em; color: var(--ink); }
-  .support__intro { margin-top: 24px; font-size: 18px; line-height: 24px; font-weight: 500; color: var(--muted); }
-  .support__grid { margin-top: 80px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
-  .support__card { display: flex; flex-direction: column; gap: 64px; padding: 24px 24px 32px; background: var(--card); }
-  .support__note { margin-top: 48px; font-size: 18px; line-height: 24px; font-weight: 500; color: var(--muted); }
-  @media (max-width: 809px) {
-    .support { padding: 80px 0; }
-    .support__title { font-size: 40px; }
-    .support__grid { grid-template-columns: 1fr; margin-top: 48px; gap: 16px; }
-    .support__card { gap: 40px; }
-  }
+  .faq__more { margin-top: 48px; text-align: center; font-size: 18px; line-height: 24px; font-weight: 500; color: var(--muted); }
+  .faq__more a { color: var(--blue); text-decoration: none; }
+  .faq__more a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
   /* Footer */
   .site-footer { padding-top: 96px; }
@@ -208,50 +232,47 @@
 
 <main>
   <section class="hero">
-    <div class="hero__stack">
+    <div class="hero__grid">
+      <!-- NEW START: sales-only headline, who the form is for, and what happens next -->
       <div class="hero__head">
-        <h1 class="hero__title">Interested in LAAMP? Let’s Chat.</h1>
-        <p class="hero__sub">Reach out and we’ll help you get started with a trial.</p>
-      </div>
-
-      <!-- NEW START: sales or support chooser -->
-      <div class="choose">
-        <div class="choose__card">
-          <span class="icon-dot" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>
-          <div>
-            <h2 class="card-title">New to LAAMP?</h2>
-            <p class="card-text">Tell us about your sites and teams, and we’ll help you get started.</p>
-            <a class="card-link" href="#sales-form">Talk to sales</a>
-          </div>
-        </div>
-        <div class="choose__card">
-          <span class="icon-dot" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M14.83 9.17l4.24-4.24M4.93 19.07l4.24-4.24"/></svg></span>
-          <div>
-            <h2 class="card-title">Already using LAAMP?</h2>
-            <p class="card-text">Get help with your account, courses or the app from our support team.</p>
-            <a class="card-link" href="support.html">Get support</a>
-          </div>
-        </div>
+        <p class="hero__eyebrow">Contact sales</p>
+        <h1 class="hero__title">Request a demo of LAAMP</h1>
+        <p class="hero__sub">For organisations looking at LAAMP for their sites and workforce. See how it handles training, inductions and assessments for your teams.</p>
+        <h2 class="steps__title">What happens next</h2>
+        <ol class="steps">
+          <li><span class="steps__num" aria-hidden="true">1</span><div><strong>Send the form</strong><p>Tell us about your sites and teams.</p></div></li>
+          <li><span class="steps__num" aria-hidden="true">2</span><div><strong>We reply by email</strong><p>One of our team gets back to you with a link to book a time.</p></div></li>
+          <li><span class="steps__num" aria-hidden="true">3</span><div><strong>We show you LAAMP</strong><p>See how LAAMP works on any device, online or offline, wherever your people are. Ask us anything.</p></div></li>
+        </ol>
       </div>
       <!-- NEW END -->
 
-      <!-- Existing sales form. In Framer, give this section the ID "sales-form". Country list is shortened in this mockup. -->
+      <!-- Existing sales form, same fields. In Framer, keep the ID "sales-form". Country list is shortened in this mockup. -->
       <div class="form-card" id="sales-form">
-        <form class="form" action="#" onsubmit="return false;">
-          <div class="field"><label for="s-name">Full Name*</label><input id="s-name" type="text" placeholder="Enter your name" required></div>
-          <div class="field"><label for="s-email">Business Email*</label><input id="s-email" type="email" placeholder="Enter your email" required></div>
-          <div class="field"><label for="s-phone">Phone Number</label><input id="s-phone" type="tel" placeholder="+61 4XX XXX XXX"></div>
-          <div class="field"><label for="s-company">Company*</label><input id="s-company" type="text" placeholder="Where do you work?" required></div>
-          <div class="field"><label for="s-size">Company size</label>
-            <select id="s-size"><option value="">Select</option><option>1-99</option><option>100-999</option><option>1000-4999</option><option>5000+</option></select></div>
-          <div class="field"><label for="s-country">Country</label>
-            <select id="s-country" class="has-value"><option selected>Australia</option><option>New Zealand</option><option>USA</option><option>Canada</option><option>United Kingdom</option><option>South Africa</option><option>Indonesia</option><option>Papua New Guinea</option></select></div>
-          <div class="field"><label for="s-message">Message*</label><textarea id="s-message" placeholder="Leave us a message..." required></textarea></div>
-          <div class="field"><label for="s-source">How did you first hear about LAAMP?</label>
-            <select id="s-source"><option value="">Select</option><option>Search engine (Google, Bing, Yahoo, etc.)</option><option>AI assistant (ChatGPT, Claude, Perplexity, Gemini, etc.)</option><option>LinkedIn (post, ad, or message)</option><option>Industry event (conference, expo, site visit, etc.)</option><option>Referral (colleague, client, partner, etc.)</option><option>Article or review site (industry media, G2, Capterra, etc.)</option></select></div>
-          <button class="btn-primary" type="submit">Contact sales</button>
-          <p class="form-note">By submitting this form, you agree to LAAMP’s <a href="https://laamp.com.au/support/privacy-policy">Privacy Policy</a>, and LAAMP contacting you.</p>
-        </form>
+        <!-- NEW: note for people who are not buying. Wording is a draft for Tim and Beau to confirm. -->
+        <p class="sales-note"><strong>Already using LAAMP, or waiting for your login?</strong> This form is for new enquiries only. Please contact your site’s health, safety and training manager, or visit our <a href="support.html">Support page</a>.</p>
+      <form class="form" action="#" onsubmit="return false;">
+        <div class="field"><label for="s-name">Full Name*</label><input id="s-name" type="text" placeholder="Enter your name" required></div>
+        <div class="field"><label for="s-email">Business Email*</label><input id="s-email" type="email" placeholder="Enter your email" required></div>
+        <div class="field"><label for="s-phone">Phone Number</label><input id="s-phone" type="tel" placeholder="+61 4XX XXX XXX"></div>
+        <div class="field"><label for="s-company">Company*</label><input id="s-company" type="text" placeholder="Where do you work?" required></div>
+        <div class="field"><label for="s-size">Company size</label>
+          <select id="s-size"><option value="">Select</option><option>1-99</option><option>100-999</option><option>1000-4999</option><option>5000+</option></select></div>
+        <div class="field"><label for="s-country">Country</label>
+          <select id="s-country" class="has-value"><option selected>Australia</option><option>New Zealand</option><option>USA</option><option>Canada</option><option>United Kingdom</option><option>South Africa</option><option>Indonesia</option><option>Papua New Guinea</option></select></div>
+        <div class="field"><label for="s-message">Message*</label><textarea id="s-message" placeholder="Leave us a message..." required></textarea></div>
+        <div class="field"><label for="s-source">How did you first hear about LAAMP?</label>
+          <select id="s-source"><option value="">Select</option><option>Search engine (Google, Bing, Yahoo, etc.)</option><option>AI assistant (ChatGPT, Claude, Perplexity, Gemini, etc.)</option><option>LinkedIn (post, ad, or message)</option><option>Industry event (conference, expo, site visit, etc.)</option><option>Referral (colleague, client, partner, etc.)</option><option>Article or review site (industry media, G2, Capterra, etc.)</option></select></div>
+        <!-- NEW: marketing consent. Same wording as the website chat's consent box (CHAT-v1), which is already live.
+             Same field and rules as the Workforce Readiness page (ActiveCampaign form 20): field 30 "Marketing opt-in",
+             value "Yes". Unticked by default, not required, separate from the enquiry. -->
+        <div class="consent">
+          <input id="s-consent" type="checkbox" name="field[30][]" value="Yes">
+          <label for="s-consent">Send me LAAMP news and practical tips by email. Unsubscribe anytime.</label>
+        </div>
+        <button class="btn-primary" type="submit">Request a demo</button>
+        <p class="form-note">We’ll use these details to arrange your demo and follow up on your enquiry. See our <a href="https://laamp.com.au/support/privacy-policy">Privacy Policy</a>.</p>
+      </form>
       </div>
     </div>
   </section>
@@ -293,48 +314,12 @@
           <div class="faq__answer"><p>LAAMP data can be made available to external systems in two formats:</p><p>Scheduled bulk extracts will synchronise large amounts of data. This is a good approach for many analytical scenarios. Data in LAAMP can be exported in a variety of formats, with extracts made available for download using secure time-limited links.</p><p>Real-time events are suitable for informing an external system that the state of a particular records has changed, so that system can take action. Events can be raised when: a user changes, state; when training changes state; or when a competency changes state. These events are passed to an API that you can configure within LAAMP.</p></div></details>
         <details class="faq__item"><summary><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 1v14M1 8h14"/></svg>Is LAAMP SCORM compliant?</summary>
           <div class="faq__answer"><p>While we don’t recommend SCORM learning, LAAMP is SCORM compliant, and able to deliver SCORM content to users on web and mobile platforms.</p><p>SCORM (Shareable Content Object Reference Model) is outdated technology, dating back to the early 2000’s. Many SCORM courses were built on Adobe Flash which reached end of life on 01/Jan/2021.</p><p>If your organisation is still operating with SCORM frameworks, you may not be taking a modern approach to learning - as a result you are likely restricting outcomes.</p></div></details>
-        <!-- CHANGED: hours aligned with the rest of the page (live text says 8:30 am to 5:30pm (EST)). Confirm with the support team. -->
-        <details class="faq__item"><summary><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 1v14M1 8h14"/></svg>Is support available if we encounter a problem with LAAMP?</summary>
-          <div class="faq__answer"><p>Standard LAAMP support can be accessed via email and telephone, Monday to Friday, 8am to 5pm, Adelaide time. Our LAAMP support team assesses the severity and urgency of the enquiry and offers appropriate assistance. Responses and resolutions can be expected in-line with agreed service level agreements; support services during these standard hours are included in licensing costs.</p><p>Dedicated 24/7 support can also be arranged - we can explore the pricing and service model that best suits your needs.</p></div></details>
       </div>
+      <!-- NEW: second pointer to Support. The support FAQ item that sat here has moved to the Support page. -->
+      <p class="faq__more">Already using LAAMP and need help? <a href="support.html">Visit Support</a></p>
     </div>
   </section>
 
-  <!-- NEW START: support section, replaces "We'd love to hear from you" -->
-  <section class="support" id="support" aria-labelledby="support-title">
-    <div class="container">
-      <h2 class="support__title" id="support-title">Need help with LAAMP?</h2>
-      <p class="support__intro">Our support team is available Monday to Friday, 8am to 5pm, Adelaide time.</p>
-      <div class="support__grid">
-        <div class="support__card">
-          <span class="icon-dot" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></span>
-          <div>
-            <h3 class="card-title">Send a support request</h3>
-            <p class="card-text">Tell us what’s happening and we’ll get back to you in support hours.</p>
-            <a class="card-link" href="support.html">Open the support form</a>
-          </div>
-        </div>
-        <div class="support__card">
-          <span class="icon-dot" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/></svg></span>
-          <div>
-            <h3 class="card-title">Email support</h3>
-            <p class="card-text">Tell us which device you’re using. LAAMP works on any device, online or offline.</p>
-            <a class="card-link" href="mailto:support@laamp.com.au">support@laamp.com.au</a>
-          </div>
-        </div>
-        <div class="support__card">
-          <span class="icon-dot" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-          <div>
-            <h3 class="card-title">Call us</h3>
-            <p class="card-text">For sales or support, during business hours.</p>
-            <a class="card-link" href="tel:1300052267">13 000 LAAMP</a>
-          </div>
-        </div>
-      </div>
-      <p class="support__note">Visit our office at Level 4, 30 Currie Street, Adelaide SA 5000.</p>
-    </div>
-  </section>
-  <!-- NEW END -->
 </main>
 
 <footer class="site-footer">
