@@ -11,11 +11,14 @@
 <!--
   NEW /contact-us hub, version 1: test version for the meeting with Tim on 18 Nov.
   Based on Didid's feedback (17 Nov). "Contact Sales" in the header becomes "Contact us" and opens this page.
+  The header shows only Login and Contact us (Support removed, Hendi 17 Nov). The footer keeps "Get support".
   People choose what they need:
   1. Chat with us: opens the Tidio chat. It comes first, as a reminder to try the chat before contacting a person.
      The card text is the chat widget's own message (approved 4 Nov).
-  2. Contact sales: the demo form as it is today (sales.html in this demo; for example /contact-sales in Framer).
-  3. Get support: the answers page first, with the support form at the bottom (support.html here, /support in Framer).
+  2. Contact sales: goes to the current sales page as it is (laamp.com.au/contact-us), per Didid and Hendi (17 Nov).
+     In Framer this hub would take /contact-us, so the current sales page needs a new address, for example /contact-sales.
+  3. Get support: the answers page first (support.html here, /support in Framer). The support form has its own page,
+     linked from the bottom of the answers page.
   Note: on 9 Nov Tim preferred two separate pages, with no choose-first step for buyers. Tim decides on 18 Nov.
   Wording is a draft for Tim and Beau. The chat button calls tidioChatApi.open(). The Tidio script is at the end of the page.
   In this demo, links point to the .html files so they work on GitHub Pages.
@@ -145,9 +148,8 @@
       <a class="ai" href="https://laamp.com.au/ai">AI Features <svg viewBox="0 0 10 10" fill="currentColor" aria-hidden="true"><path d="M5 0l1.2 3.8L10 5 6.2 6.2 5 10 3.8 6.2 0 5l3.8-1.2z"/></svg></a>
     </nav>
     <div class="site-actions">
-      <a class="btn-nav" href="support.html">Support</a>
       <a class="btn-nav" href="https://laamp.com.au/app">Login</a>
-      <!-- CHANGED (17 Nov): "Contact Sales" is now "Contact us". It opens this page. -->
+      <!-- CHANGED (17 Nov): Support removed from the header. "Contact Sales" is now "Contact us". It opens this page. -->
       <a class="btn-nav btn-nav--solid" href="index.html" aria-current="page">Contact us</a>
     </div>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
@@ -159,7 +161,6 @@
     <a href="https://laamp.com.au/blog">Blog</a>
     <a href="https://laamp.com.au/about">About us</a>
     <a href="https://laamp.com.au/ai">AI Features</a>
-    <a href="support.html">Support</a>
     <a href="https://laamp.com.au/app">Login</a>
     <a href="index.html" aria-current="page">Contact us</a>
   </nav>
@@ -185,16 +186,16 @@
         </div>
         <button class="option__cta option__cta--primary js-chat" type="button">Start a chat</button>
       </div>
-      <!-- 2. Sales: the demo form as it is today (sales.html in this demo). -->
+      <!-- 2. Sales: the current sales page as it is (laamp.com.au/contact-us). -->
       <div class="option">
         <span class="icon-dot" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
         <div class="option__body">
           <h2 class="card-title">Contact sales</h2>
           <p class="card-text">Looking at LAAMP for your organisation? Request a demo and see how it works on any device, online or offline.</p>
         </div>
-        <a class="option__cta" href="sales.html">Request a demo</a>
+        <a class="option__cta" href="https://laamp.com.au/contact-us">Request a demo</a>
       </div>
-      <!-- 3. Support: opens on the answers first. The support form is at the bottom of that page. -->
+      <!-- 3. Support: opens on the answers first. The support form has its own page, linked from the bottom of that page. -->
       <div class="option">
         <span class="icon-dot" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></span>
         <div class="option__body">
